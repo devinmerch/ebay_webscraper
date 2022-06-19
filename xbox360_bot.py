@@ -5,7 +5,7 @@ import discord
 import random
 from ebay_scraper import *
 
-token = 'OTgxMzQ1MDIwOTI3OTM0NTE0.GcRXMX.HF9R9nNmBq0kLg6KG8wHGgX4jHmoTEcQHg9jMY'
+token = 'OTgxMzQ1MDIwOTI3OTM0NTE0.GMk668.tD0GJva3-Tqwl9qqHMvbfMjGda7TMTBUhgQII4'
 
 client = discord.Client()
 

@@ -6,7 +6,7 @@ import random
 from gamecube_bot_files.gamecube_url import *
 
 
-token = 'OTgyMTMwNzY3Nzk2NzY4NzY4.G09Ov4.-F3w_IwqHWPaSXmlHCTy6SMt0noGMJDxaTXFsQ'
+token = 'OTgyMTMwNzY3Nzk2NzY4NzY4.GLUYfo.EBSeQ4okvdes_M-t9s24Qia_rN2T8FHz4Agtdk'
 
 client = discord.Client()
 
