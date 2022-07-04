@@ -6,18 +6,21 @@ During my time working on the web scraper bot, I followed a YouTube tutorial by 
 I then tried to apply this logic to more advanced sites such as Amazon, but shortly became aware of their web scraping prevention tactics. I became familiar with User Agents as well as ways to rotate User Agents to workaround the prevention but ended up concluding the project.  
 
 ## Key takeaways from the Beautiful Soup Library
-•Generic Structure to store a URL.
+• Generic Structure to store a URL.
+```python
 import BeautifulSoup
 import requests
-```python
+
 url = ""
 results = requests.get(url)
 doc = BeautifulSoup(results.text, "html.parser")
+```
 •	To find a class, use “class_”
+```python
 .find(["h1"], class_="item_title”)
 ```
 ## Key Takeaways from the Discord Library
-•Generic structure to create a bot (discord developer portal to obtain bot token). 
+• Generic structure to create a bot (discord developer portal to obtain bot token). 
 ```python
 import discord
 
