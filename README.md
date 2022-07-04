@@ -9,15 +9,16 @@ I then tried to apply this logic to more advanced sites such as Amazon, but shor
 •	Generic Structure to store a URL.
 import BeautifulSoup
 import requests
-
+```python
 url = ""
 results = requests.get(url)
 doc = BeautifulSoup(results.text, "html.parser")
 •	To find a class, use “class_”
 .find(["h1"], class_="item_title”)
-
+```
 ## Key Takeaways from the Discord Library
 •	Generic structure to create a bot (discord developer portal to obtain bot token). 
+```python
 import discord
 
 token = ‘’
@@ -25,3 +26,4 @@ token = ‘’
 client = discord.Client()
 //do stuff
 client.run(token)
+```
