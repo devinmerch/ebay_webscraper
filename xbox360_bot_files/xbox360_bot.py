@@ -1,9 +1,8 @@
-from datetime import datetime
-from http import client
+import datetime
 import time
 import discord
-import random
 from ebay_scraper import *
+
 
 token = 'OTgxMzQ1MDIwOTI3OTM0NTE0.GMk668.tD0GJva3-Tqwl9qqHMvbfMjGda7TMTBUhgQII4'
 
@@ -15,6 +14,7 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    duplicatetitle = "test"
 
     if message.author == client.user:
         return
@@ -79,3 +79,4 @@ async def on_message(message):
                 time.sleep(20)
 
 client.run(token)
+

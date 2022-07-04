@@ -1,7 +1,3 @@
-from cgi import print_exception
-from os import link
-from unittest import result
-from webbrowser import get
 from bs4 import BeautifulSoup
 import requests
 import time
@@ -45,3 +41,4 @@ def refreshpage():
     doc = BeautifulSoup(results.text, "html.parser")
     #Grabs first item in carousel
     li_tags = doc.find(["li"], class_="s-item s-item__pl-on-bottom s-item--watch-at-corner")
+

@@ -1,84 +1,46 @@
-from datetime import datetime
-from http import client
+from bs4 import BeautifulSoup
+import requests
 import time
-import discord
-import random
-from gamecube_bot_files.gamecube_url import *
 
+url = None
+results = None
+doc = None
+li_tags = None
 
-token = 'OTgyMTMwNzY3Nzk2NzY4NzY4.GLUYfo.EBSeQ4okvdes_M-t9s24Qia_rN2T8FHz4Agtdk'
+def get_title():
+    refreshpage()
+    #Grabs first LI element in carousel
+    title_tags = li_tags.find(["h3"], class_="s-item__title").getText()
+    #Formatting (Removes "New listing")
+    item_title = title_tags.replace(title_tags[:11], '')
+    return(item_title)
 
-client = discord.Client()
+def get_price():
+    refreshpage()
+    #Grabs LI element's span tag containing price
+    price_tags = li_tags.find(["span"], class_= "s-item__price")
+    #Formatting for just dollar amount
+    item_price = (price_tags.string)
+    return(item_price)
 
-@client.event
-async def on_ready():
-    print('Discord bot online. Logged in as {0.user}'.format(client))
+def get_link():
+    refreshpage()
+    #Grabs LI element's a tag containing link
+    link_tags = li_tags.find(["a"], class_= "s-item__link")
+    #Formatting for just the link
+    item_link = link_tags['href']
+    return(item_link)
 
-@client.event
-async def on_message(message):
-    duplicatetitle = "test"
+def refreshpage():
+    #updates the global variables the functions pull from
+    global url
+    global results
+    global doc
+    global li_tags
 
-    if message.author == client.user:
-        return
-
-    if message.channel.name == 'gamecubealerts':
-        if message.content.startswith('!start'):
-            await message.channel.send('Working...')
-            while True:
-                title1 = get_title()
-                #Formats title to lowercase string and removes $ in price
-                title1 = title1.lower()
-                title1 = str(title1)
-
-                if ("animal crossings" in title1) and (title1 != duplicatetitle):
-                    price = get_price()
-                    price = price.replace(price[:1], '')
-                    price = float(price)
-                    if (price >= 300) and (price <= 1000):
-                        await message.channel.send('<@147857923832414209> ' + str(title1.upper()))
-                        await message.channel.send('Price is: $' + str(price))
-                        await message.channel.send(get_link())
-                        #Shows timestamp
-                        now = datetime.now()
-                        dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
-                        await message.channel.send("Timestamp = " + str(dt_string))
-                        duplicatetitle = title1
-                        continue
-                    continue
-
-                if ("wind waker") in title1 and (title1 != duplicatetitle):
-                    price = get_price()
-                    price = price.replace(price[:1], '')
-                    price = float(price)
-                    if (price >= 300) and (price <= 500):
-                        await message.channel.send('<@147857923832414209> ' + str(title1.upper()))
-                        await message.channel.send('Price is: $' + str(price))
-                        await message.channel.send(get_link())
-                        #Shows timestamp
-                        now = datetime.now()
-                        dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
-                        await message.channel.send("Timestamp = " + str(dt_string))
-                        duplicatetitle = title1
-                        continue
-                    continue
-
-                if ("pokemon colosseum" in title1) and (title1 != duplicatetitle):
-                    price = get_price()
-                    price = price.replace(price[:1], '')
-                    price = float(price)
-                    if (price >= 205) and (price <= 500):
-                        await message.channel.send('<@147857923832414209> ' + str(title1.upper()))
-                        await message.channel.send('Price is: $' + str(price))
-                        await message.channel.send(get_link())
-                        #Shows timestamp
-                        now = datetime.now()
-                        dt_string = now.strftime("%m/%d/%Y %H:%M:%S")
-                        await message.channel.send("Timestamp = " + str(dt_string))
-                        duplicatetitle = title1
-                        continue
-                    continue
-
-                time.sleep(60)
-                refreshpage()
-
-client.run(token)
+    url = "https://www.ebay.com/sch/i.html?_from=R40&_nkw=gamecube&_sacat=139973&LH_ItemCondition=1000&_sop=10"
+    #Sends HTTP Request and stores results
+    results = requests.get(url)
+    doc = BeautifulSoup(results.text, "html.parser")
+    #Grabs first item in carousel
+    li_tags = doc.find(["li"], class_="s-item s-item__pl-on-bottom s-item--watch-at-corner")
